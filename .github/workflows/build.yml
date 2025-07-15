@@ -121,11 +121,20 @@ jobs:
           merge-multiple: true
 
       - name: Create Latest release
-        uses: 'marvinpinto/action-automatic-releases@latest'
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          automatic_release_tag: latest
+          tag_name: latest
+          name: "Latest Build"
+          body: |
+            Static builds of clang-format for multiple LLVM versions.
+            
+            **Available versions:**
+            - LLVM 18.1.8, 19.1.7, 20.1.8
+            - Ubuntu x86_64 (.tar.gz)
+            - Windows x86_64 and x86 (.zip)
+            
+            Download the appropriate archive for your platform and extract the binary.
           prerelease: true
-          title: "Latest Build"
-          files: |
-            artifacts/*
+          files: artifacts/*
